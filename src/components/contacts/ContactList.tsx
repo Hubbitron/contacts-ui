@@ -14,11 +14,16 @@ const ContactList = () => {
         navigate('/contactedit/0');
     };
 
-    const onDelete = async (id: number) => {
-        const response = await callFetch("/delete/" + id, "DELETE", "");
+    const onDelete = async (contact: Contact): Promise<void> => {
+        const result: boolean = window.confirm("Are you sure about this? You really want to delete " + contact.firstName + " " + contact.lastName + " " + "?");
+        if (!result) {
+            return;
+        }
 
-        const updatedRows = rows.filter((contact: Contact) => 
-            contact.id !== id
+        const response = await callFetch("/delete/" + contact.id, "DELETE", "");
+
+        const updatedRows = rows.filter((item: Contact) => 
+            contact.id !== item.id
         );
 
         setRows (updatedRows);
@@ -85,7 +90,7 @@ const ContactList = () => {
                                         {row.firstName}
                                     </TableCell>
                                     <TableCell className='mat-cell-right'>
-                                        <Button variant = "secondary" type = "button" onClick={() => onDelete(row.id)}>
+                                        <Button variant = "secondary" type = "button" onClick={() => onDelete(row)}>
                                             X
                                         </Button>
                                     </TableCell>
