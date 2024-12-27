@@ -70,7 +70,9 @@ const ContactList = () => {
                                 First Name
                             </TableCell>
                             <TableCell>
-                                Remove
+                                <div className='mat-header-cell-right'>
+                                    Remove
+                                </div>
                             </TableCell>
                         </TableRow>
                     </TableHead>
