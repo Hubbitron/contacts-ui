@@ -1,24 +1,20 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ContactList from './components/contacts/ContactList';
+import { BrowserRouter, Route, Router, Routes } from 'react-router';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Hello this is Chris and this is my first react app</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element = {
+            <ContactList/>
+          }/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
