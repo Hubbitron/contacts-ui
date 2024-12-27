@@ -97,7 +97,10 @@ const ContactList = () => {
                                 </div>
                             </TableCell>
                             <TableCell>
-                                <div className='mat-header-cell-right'>
+                                Profile Pic
+                            </TableCell>
+                            <TableCell>
+                                <div>
                                     Remove
                                 </div>
                             </TableCell>
@@ -121,7 +124,10 @@ const ContactList = () => {
                                     <TableCell className='mat-cell-left'>
                                         {formattedDate(row.dob)}
                                     </TableCell>
-                                    <TableCell className='mat-cell-right'>
+                                    <Button variant = "secondary" type = "button" onClick={() => downloadProfilePic(row.id)}>
+                                            Download
+                                        </Button>
+                                    <TableCell className='mat-cell-left'>
                                         <Button variant = "secondary" type = "button" onClick={() => onDelete(row)}>
                                             X
                                         </Button>
