@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Contact } from './model/Contact'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { callFetch } from '../helper/Global';
+import { callFetch, callFetchFile } from '../helper/Global';
 import { Link, NavigateFunction, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
 import { formattedDate } from '../helper/Utilities';
 
 const ContactList = () => {
-    
+
     const [rows, setRows] = useState<Contact[]>([]);
     let navigate: NavigateFunction = useNavigate();
     
@@ -48,8 +48,29 @@ const ContactList = () => {
 
     },[]);
 
-  
-    return (
+    const downloadProfilePic = async(id: number): Promise<void> => {
+        
+        const endpoint: string = "/getProfilePic/" + id;
+        const response = await callFetchFile(endpoint, "GET", "");
+        if (response.status !== 200) {
+            alert("Error downloading file, error code 200");
+        }
+
+        const profilePic = await response.blob();
+        const url = window.URL.createObjectURL(profilePic);
+        const fileName = response.headers.get("Content-Disposition")?.split("filename=")[1];
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName ?? "");
+        document.body.appendChild(link);
+        link.click();
+        if(link.parentNode) {
+            link.parentNode.removeChild(link);
+        }
+        setTimeout(() => window.URL.revokeObjectURL(url), 500);
+    };
+
+  return(
     <div className='App'>
         <Button variant = "secondary" type = "button" onClick={onAdd}>
             Add
@@ -60,7 +81,7 @@ const ContactList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>
-                                <div className='mat-header-cell-right'>
+                                <div className='mat-header-cell-left'>
                                     ID
                                 </div>
                             </TableCell>
@@ -71,7 +92,7 @@ const ContactList = () => {
                                 First Name
                             </TableCell>
                             <TableCell>
-                                <div className='mat-header-cell-right'>
+                                <div className='mat-header-cell-left'>
                                 DOB
                                 </div>
                             </TableCell>
@@ -86,7 +107,7 @@ const ContactList = () => {
                         {rows.map((row: Contact) => {
                             return (
                                 <TableRow key={row.id}>
-                                    <TableCell className='mat-cell-right'>
+                                    <TableCell className='mat-cell-left'>
                                         {row.id}
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
@@ -97,7 +118,7 @@ const ContactList = () => {
                                     <TableCell className='mat-cell-left'>
                                         {row.firstName}
                                     </TableCell>
-                                    <TableCell className='mat-cell-right'>
+                                    <TableCell className='mat-cell-left'>
                                         {formattedDate(row.dob)}
                                     </TableCell>
                                     <TableCell className='mat-cell-right'>
@@ -113,7 +134,7 @@ const ContactList = () => {
             </TableContainer>
         </Paper>
     </div>
-  )
+  );
 }
 
 export default ContactList
