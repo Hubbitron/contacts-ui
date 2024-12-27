@@ -14,6 +14,17 @@ const ContactList = () => {
         navigate('/contactedit/0');
     };
 
+    const onDelete = async (id: number) => {
+        const response = await callFetch("/delete/" + id, "DELETE", "");
+
+        const updatedRows = rows.filter((contact: Contact) => 
+            contact.id !== id
+        );
+
+        setRows (updatedRows);
+
+    };
+
     useEffect(() => {
         // const contactlist = [
         //     {'id': 1, lastName: 'Hubbard'},
@@ -53,6 +64,9 @@ const ContactList = () => {
                             <TableCell>
                                 First Name
                             </TableCell>
+                            <TableCell>
+                                Remove
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -69,6 +83,11 @@ const ContactList = () => {
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
                                         {row.firstName}
+                                    </TableCell>
+                                    <TableCell className='mat-cell-right'>
+                                        <Button variant = "secondary" type = "button" onClick={() => onDelete(row.id)}>
+                                            X
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             )
