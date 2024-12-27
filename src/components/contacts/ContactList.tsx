@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { Contact } from './model/Contact'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { callFetch } from '../helper/Global';
-import { Link } from 'react-router';
+import { Link, NavigateFunction, useNavigate } from 'react-router';
+import { Button } from 'react-bootstrap';
 
 const ContactList = () => {
     
     const [rows, setRows] = useState<Contact[]>([]);
-
+    let navigate: NavigateFunction = useNavigate();
+    
+    const onAdd = () => {
+        navigate('/contactedit/0');
+    };
 
     useEffect(() => {
         // const contactlist = [
@@ -17,7 +22,7 @@ const ContactList = () => {
         // ];
 
         const getRows = async(): Promise<void> => {
-            const response = await callFetch("http://localhost:8080/ContactsApi/api/getAll", "GET", "");
+            const response = await callFetch("/getAll", "GET", "");
             const rowsFromServer: Contact[] = await response.json();
             setRows(rowsFromServer);
         };
@@ -28,14 +33,19 @@ const ContactList = () => {
 
   
     return (
-    <div>
+    <div className='App'>
+        <Button variant = "secondary" type = "button" onClick={onAdd}>
+            Add
+        </Button>
         <Paper className = "paper">
             <TableContainer className = "table-container">
                 <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell>
-                                ID
+                                <div className='mat-header-cell-right'>
+                                    ID
+                                </div>
                             </TableCell>
                             <TableCell>
                                 Last Name
@@ -57,7 +67,7 @@ const ContactList = () => {
                                             {row.lastName}
                                         </Link>
                                     </TableCell>
-                                    <TableCell className='mat-cell-center'>
+                                    <TableCell className='mat-cell-left'>
                                         {row.firstName}
                                     </TableCell>
                                 </TableRow>

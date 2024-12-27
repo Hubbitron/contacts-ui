@@ -1,7 +1,6 @@
-
 export const callFetch = (endpoint: string, method: string, json: string) => {
-    let myHeadersNoAuth = {
-
+    const serverName: string = process.env.REACT_APP_API_DOMAIN + "/" + process.env.REACT_APP_API_CONTEXT_PATH + "/" + process.env.REACT_APP_API_PATH;
+    let myHeadersNoAuth = {       
         "Content-Type" : "application/json",
         "Accept" : "application/json",
 
@@ -9,16 +8,16 @@ export const callFetch = (endpoint: string, method: string, json: string) => {
         'Access-Control-Allow-Origin': '*',
     };
     
-
+    const finalEndpoint = serverName + endpoint;
 
     let myInit = {method: method, headers: myHeadersNoAuth};
 
     let myInitWithBody = {method: method, headers: myHeadersNoAuth, body: json};
 
     if (json) {
-        return fetch (endpoint, myInitWithBody);
+        return fetch (finalEndpoint, myInitWithBody);
     }
 
-    return (fetch (endpoint, myInit));
+    return (fetch (finalEndpoint, myInit));
     
 };

@@ -16,7 +16,10 @@ const ContactEdit = () => {
   const form = useForm<Contact>({
     defaultValues: async (): Promise<Contact> => {
       let form: Contact = new Contact();
-      const response = await callFetch("http://localhost:8080/ContactsApi/api/getSingle/" + id, "GET", "");
+      if(id === '0'){
+        return form;
+      }
+      const response = await callFetch("/getSingle/" + id, "GET", "");
       const rowFromServer = await response.json();
       form = rowFromServer;
       return form;
@@ -24,7 +27,7 @@ const ContactEdit = () => {
     mode: "all",
   });
   
-  const { register, handleSubmit, formState } = form;
+  const { register, handleSubmit, formState, watch } = form;
   const { errors, isValid } = formState;
   
   const onSubmit = async (formData: Contact): Promise<void> => {
@@ -32,13 +35,15 @@ const ContactEdit = () => {
     contact.id = formData.id;
     contact.lastName = formData.lastName;
     contact.firstName = formData.firstName;
-    console.log("contact = ", contact);
-    const response = await callFetch("http://localhost:8080/ContactsApi/api/update", "PUT", JSON.stringify(contact));
-    if (!response.ok) {
-      alert("Update failed");
+
+    const httpMethod = formData.id === 0 ? "POST" : "PUT";
+    const endpoint = formData.id === 0 ? "/insert" : "/update";
+    const response = await callFetch(endpoint, httpMethod, JSON.stringify(contact));
+    if (!response.ok && response.status !== 201) {
+      alert("Update failed" + " " + response.status);
       return;
     }
-    
+
     navigate("/");
   }
 
@@ -59,9 +64,10 @@ const ContactEdit = () => {
               </td>
               <td className='label-align'>
                 <div className='field-label'>
-                  <input type = "number" className='textbox-small' id="id" 
+                  <input type = "hidden" className='textbox-small' id="id" 
                     {...register("id")}
                   />
+                  {watch("id")}
                 </div>
               </td>
             </tr>
