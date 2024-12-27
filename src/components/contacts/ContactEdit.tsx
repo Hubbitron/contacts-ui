@@ -56,6 +56,18 @@ const ContactEdit = () => {
                 </div>
               </td>
             </tr>
+            <tr>
+              <td className='label-align'>
+                First Name
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="firstName"
+                    {...register("firstName")}
+                  />
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </form>

@@ -40,6 +40,9 @@ const ContactList = () => {
                             <TableCell>
                                 Last Name
                             </TableCell>
+                            <TableCell>
+                                First Name
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -53,6 +56,9 @@ const ContactList = () => {
                                         <Link to = {"/contactedit/" + row.id} className="hyperlink">
                                             {row.lastName}
                                         </Link>
+                                    </TableCell>
+                                    <TableCell className='mat-cell-center'>
+                                        {row.firstName}
                                     </TableCell>
                                 </TableRow>
                             )
