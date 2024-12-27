@@ -54,6 +54,7 @@ const ContactList = () => {
         const response = await callFetchFile(endpoint, "GET", "");
         if (response.status !== 200) {
             alert("Error downloading file, error code 200");
+            return;
         }
 
         const profilePic = await response.blob();
