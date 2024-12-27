@@ -35,7 +35,7 @@ const ContactEdit = () => {
     contact.id = formData.id;
     contact.lastName = formData.lastName;
     contact.firstName = formData.firstName;
-
+    contact.dob = formData.dob;
     const httpMethod = formData.id === 0 ? "POST" : "PUT";
     const endpoint = formData.id === 0 ? "/insert" : "/update";
     const response = await callFetch(endpoint, httpMethod, JSON.stringify(contact));
@@ -60,19 +60,6 @@ const ContactEdit = () => {
           <tbody>
             <tr>
               <td className='label-align'>
-                Contact ID
-              </td>
-              <td className='label-align'>
-                <div className='field-label'>
-                  <input type = "hidden" className='textbox-small' id="id" 
-                    {...register("id")}
-                  />
-                  {watch("id")}
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className='label-align'>
                 Last Name
               </td>
               <td className='label-align'>
@@ -95,6 +82,18 @@ const ContactEdit = () => {
                 </div>
               </td>
             </tr>
+            <tr>
+              <td className='label-align'>
+                DOB
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "date" className='textbox-large' id="dob"
+                    {...register("dob", {valueAsDate: true})}
+                  />
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
         <Button variant = "secondary" type = "submit">
@@ -104,5 +103,4 @@ const ContactEdit = () => {
     </div>
   )
 }
-
 export default ContactEdit

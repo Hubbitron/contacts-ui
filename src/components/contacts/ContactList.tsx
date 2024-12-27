@@ -4,6 +4,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { callFetch } from '../helper/Global';
 import { Link, NavigateFunction, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
+import { formattedDate } from '../helper/Utilities';
 
 const ContactList = () => {
     
@@ -71,6 +72,11 @@ const ContactList = () => {
                             </TableCell>
                             <TableCell>
                                 <div className='mat-header-cell-right'>
+                                DOB
+                                </div>
+                            </TableCell>
+                            <TableCell>
+                                <div className='mat-header-cell-right'>
                                     Remove
                                 </div>
                             </TableCell>
@@ -90,6 +96,9 @@ const ContactList = () => {
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
                                         {row.firstName}
+                                    </TableCell>
+                                    <TableCell className='mat-cell-right'>
+                                        {formattedDate(row.dob)}
                                     </TableCell>
                                     <TableCell className='mat-cell-right'>
                                         <Button variant = "secondary" type = "button" onClick={() => onDelete(row)}>
