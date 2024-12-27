@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import ContactList from './components/contacts/ContactList';
 import { BrowserRouter, Route, Router, Routes } from 'react-router';
+import ContactEdit from './components/contacts/ContactEdit';
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         <Routes>
           <Route path="/" element = {
             <ContactList/>
+          }/>
+          <Route path="/contactedit/:paramId" element = {
+            <ContactEdit/>
           }/>
         </Routes>
       </BrowserRouter>

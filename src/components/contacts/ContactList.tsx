@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Contact } from './model/Contact'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { callFetch } from '../helper/Global';
+import { Link } from 'react-router';
 
 const ContactList = () => {
     
@@ -44,12 +45,14 @@ const ContactList = () => {
                     <TableBody>
                         {rows.map((row: Contact) => {
                             return (
-                                <TableRow>
-                                    <TableCell>
+                                <TableRow key={row.id}>
+                                    <TableCell className='mat-cell-right'>
                                         {row.id}
                                     </TableCell>
-                                    <TableCell>
-                                        {row.lastName}
+                                    <TableCell className='mat-cell-left'>
+                                        <Link to = {"/contactedit/" + row.id} className="hyperlink">
+                                            {row.lastName}
+                                        </Link>
                                     </TableCell>
                                 </TableRow>
                             )
