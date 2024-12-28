@@ -48,5 +48,30 @@ export const callFetchFile = (endpoint: string, method: string, json: string) =>
     }
 
     return (fetch (finalEndpoint, myInit));
+
+};
+
+export const callFetchMultipart = (endpoint: string, method: string, data: any) => {
+    const serverName: string = process.env.REACT_APP_API_DOMAIN + "/" + process.env.REACT_APP_API_CONTEXT_PATH + "/" + process.env.REACT_APP_API_PATH;
+    let myHeadersNoAuth = {       
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Origin': '*',
+    };
     
+    // myHeadersNoAuth.responseType = "blob";
+
+    const finalEndpoint = serverName + endpoint;
+
+    let myInit = {method: method, headers: myHeadersNoAuth};
+
+    let myInitWithBody = {method: method, headers: myHeadersNoAuth, body: data};
+
+    
+
+    if (data) {
+        return fetch (finalEndpoint, myInitWithBody);
+    }
+
+    return (fetch (finalEndpoint, myInit));
+
 };

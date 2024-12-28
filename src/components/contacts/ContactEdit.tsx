@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { NavigateFunction, useNavigate, useParams } from 'react-router'
-import { callFetch } from '../helper/Global';
+import { callFetch, callFetchMultipart } from '../helper/Global';
 import { Contact } from './model/Contact';
 import { useForm } from 'react-hook-form';
 import { Button } from 'react-bootstrap';
@@ -30,15 +30,22 @@ const ContactEdit = () => {
   const { register, handleSubmit, formState, watch } = form;
   const { errors, isValid } = formState;
   
-  const onSubmit = async (formData: Contact): Promise<void> => {
+  const onSubmit = async (formObj: any): Promise<void> => {
     const contact = new Contact();
-    contact.id = formData.id;
-    contact.lastName = formData.lastName;
-    contact.firstName = formData.firstName;
-    contact.dob = formData.dob;
-    const httpMethod = formData.id === 0 ? "POST" : "PUT";
-    const endpoint = formData.id === 0 ? "/insert" : "/update";
-    const response = await callFetch(endpoint, httpMethod, JSON.stringify(contact));
+    contact.id = formObj.id;
+    contact.lastName = formObj.lastName;
+    contact.firstName = formObj.firstName;
+    contact.dob = formObj.dob;
+
+    const formData: FormData = new FormData();
+    formData.append("file", formObj.profilePic[0]);
+    formData.append('json', JSON.stringify(contact));
+    console.log("formobj" +  " " + formObj.profilePic[0]);
+
+
+    const httpMethod = formObj.id === 0 ? "POST" : "PUT";
+    const endpoint = formObj.id === 0 ? "/insert" : "/update";
+    const response = await callFetchMultipart(endpoint, httpMethod, formData);
     if (!response.ok && response.status !== 201) {
       alert("Update failed" + " " + response.status);
       return;
@@ -90,6 +97,18 @@ const ContactEdit = () => {
                 <div className='field-label'>
                   <input type = "date" className='textbox-large' id="dob"
                     {...register("dob", {valueAsDate: true})}
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
+                File
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "file" className='textbox-large' id="profilePic"
+                    {...register("profilePic")}
                   />
                 </div>
               </td>
