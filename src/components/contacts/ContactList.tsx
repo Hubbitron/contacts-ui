@@ -90,6 +90,9 @@ const ContactList = () => {
                                 Last Name
                             </TableCell>
                             <TableCell>
+                                Middle Name
+                            </TableCell>
+                            <TableCell>
                                 First Name
                             </TableCell>
                             <TableCell>
@@ -118,6 +121,9 @@ const ContactList = () => {
                                         <Link to = {"/contactedit/" + row.id} className="hyperlink">
                                             {row.lastName}
                                         </Link>
+                                    </TableCell>
+                                    <TableCell className='mat-cell-left'>
+                                        {row.middleName}
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
                                         {row.firstName}

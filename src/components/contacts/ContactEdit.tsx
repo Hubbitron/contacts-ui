@@ -34,13 +34,17 @@ const ContactEdit = () => {
     const contact = new Contact();
     contact.id = formObj.id;
     contact.lastName = formObj.lastName;
+    contact.middleName = formObj.middleName;
     contact.firstName = formObj.firstName;
     contact.dob = formObj.dob;
 
     const formData: FormData = new FormData();
-    formData.append("file", formObj.profilePic[0]);
+    if (formObj.profilePic) {
+      formData.append('file', formObj.profilePic[0]);
+    }
+    
     formData.append('json', JSON.stringify(contact));
-    console.log("formobj" +  " " + formObj.profilePic[0]);
+    
 
 
     const httpMethod = formObj.id === 0 ? "POST" : "PUT";
@@ -73,6 +77,18 @@ const ContactEdit = () => {
                 <div className='field-label'>
                   <input type = "text" className='textbox-large' id="lastName"
                     {...register("lastName")}
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
+                Middle Name
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="middleName"
+                    {...register("middleName")}
                   />
                 </div>
               </td>
