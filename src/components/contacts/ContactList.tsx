@@ -32,11 +32,6 @@ const ContactList = () => {
     };
 
     useEffect(() => {
-        // const contactlist = [
-        //     {'id': 1, lastName: 'Hubbard'},
-        //     {'id': 2, lastName: 'Kim'},
-        //     {'id': 3, lastName: 'Meth'}
-        // ];
 
         const getRows = async(): Promise<void> => {
             const response = await callFetch("/getAll", "GET", "");
@@ -131,9 +126,11 @@ const ContactList = () => {
                                     <TableCell className='mat-cell-left'>
                                         {formattedDate(row.dob)}
                                     </TableCell>
-                                    <Button variant = "secondary" type = "button" onClick={() => downloadProfilePic(row.id)}>
+                                    <TableCell>
+                                        <Button variant = "secondary" type = "button" onClick={() => downloadProfilePic(row.id)}>
                                             Download
                                         </Button>
+                                    </TableCell>
                                     <TableCell className='mat-cell-left'>
                                         <Button variant = "secondary" type = "button" onClick={() => onDelete(row)}>
                                             X

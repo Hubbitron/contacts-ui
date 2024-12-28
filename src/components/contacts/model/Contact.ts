@@ -4,5 +4,6 @@ export class Contact {
     middleName: string = '';
     firstName: string = '';
     dob: Date | null = null;
+    stateId: number = 0;
     profilePic: File | undefined = undefined;
 }

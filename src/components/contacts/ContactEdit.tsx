@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavigateFunction, useNavigate, useParams } from 'react-router'
 import { callFetch, callFetchMultipart } from '../helper/Global';
 import { Contact } from './model/Contact';
 import { useForm } from 'react-hook-form';
 import { Button } from 'react-bootstrap';
+import { State } from './model/State';
 
 const ContactEdit = () => {
   
@@ -11,6 +12,8 @@ const ContactEdit = () => {
   paramId = !paramId ? "" : paramId;
   
   let navigate: NavigateFunction = useNavigate();
+
+  const [stateList, setStateList] = useState<State[]>([]);
 
   const [id] = useState(paramId);
   const form = useForm<Contact>({
@@ -26,10 +29,22 @@ const ContactEdit = () => {
     },
     mode: "all",
   });
-  
+
   const { register, handleSubmit, formState, watch } = form;
   const { errors, isValid } = formState;
   
+  useEffect(() => {
+    const getStates = async(): Promise<void> => {
+      const response = await callFetch("/getStates", "GET", "");
+      const rowsFromServer: State[] = await response.json();
+
+      setStateList(rowsFromServer);
+    };
+
+    getStates();
+
+  },[]);
+
   const onSubmit = async (formObj: any): Promise<void> => {
     const contact = new Contact();
     contact.id = formObj.id;
@@ -37,6 +52,7 @@ const ContactEdit = () => {
     contact.middleName = formObj.middleName;
     contact.firstName = formObj.firstName;
     contact.dob = formObj.dob;
+    contact.stateId = formObj.stateId;
 
     const formData: FormData = new FormData();
     if (formObj.profilePic) {
@@ -58,7 +74,11 @@ const ContactEdit = () => {
     navigate("/");
   }
 
-  
+  const stateDropdownList = stateList.map((item: any) => 
+    <option key = {item.id} value = {item.id}>
+      {item.stateName}
+    </option>
+  );
 
   
   return (
@@ -114,6 +134,21 @@ const ContactEdit = () => {
                   <input type = "date" className='textbox-large' id="dob"
                     {...register("dob", {valueAsDate: true})}
                   />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
+                State
+              </td>
+              <td className='label-align'>
+                <div className='field-align-char'>
+                  <select
+                    {...register("stateId")} 
+                    value = {watch("stateId")}
+                  >
+                    {stateDropdownList}
+                  </select>
                 </div>
               </td>
             </tr>
