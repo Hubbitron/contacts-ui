@@ -4,7 +4,7 @@ import { callFetch, callFetchMultipart } from '../helper/Global';
 import { Contact } from './model/Contact';
 import { useForm } from 'react-hook-form';
 import { Button } from 'react-bootstrap';
-import { State } from './model/State';
+import { State } from '../model/State';
 
 const ContactEdit = () => {
   

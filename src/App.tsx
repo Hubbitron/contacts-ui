@@ -4,6 +4,7 @@ import './App.css';
 import ContactList from './components/contacts/ContactList';
 import { BrowserRouter, Route, Router, Routes } from 'react-router';
 import ContactEdit from './components/contacts/ContactEdit';
+import Login from './components/login/Login';
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element = {
+            <Login/>
+          }/>
+          <Route path="/contactlist" element = {
             <ContactList/>
           }/>
           <Route path="/contactedit/:paramId" element = {
