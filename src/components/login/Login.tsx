@@ -36,10 +36,11 @@ const Login = () => {
           return;
         }
         
-        const jwt: string = await response.json();
-        console.log(jwt);
+        const jwtJson= await response.json();
 
-        navigate("/");
+        sessionStorage.setItem("jwt", jwtJson.jwt);
+
+        navigate("/contactlist");
     }
     return(
         <div>

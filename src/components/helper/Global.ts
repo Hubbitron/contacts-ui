@@ -1,4 +1,6 @@
 export const callFetch = (endpoint: string, method: string, json: string) => {
+    const jwt = sessionStorage.getItem("jwt");
+    let headerJwt = "Bearer " + jwt;
     const serverName: string = process.env.REACT_APP_API_DOMAIN + "/" + process.env.REACT_APP_API_CONTEXT_PATH + "/" + process.env.REACT_APP_API_PATH;
     let myHeadersNoAuth = {       
         "Content-Type" : "application/json",
@@ -6,6 +8,7 @@ export const callFetch = (endpoint: string, method: string, json: string) => {
 
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Origin': '*',
+        'Authorization': headerJwt
     };
     
     const finalEndpoint = serverName + endpoint;
@@ -24,6 +27,8 @@ export const callFetch = (endpoint: string, method: string, json: string) => {
     
 };
 export const callFetchFile = (endpoint: string, method: string, json: string) => {
+    const jwt = sessionStorage.getItem("jwt");
+    let headerJwt = "Bearer " + jwt;
     const serverName: string = process.env.REACT_APP_API_DOMAIN + "/" + process.env.REACT_APP_API_CONTEXT_PATH + "/" + process.env.REACT_APP_API_PATH;
     let myHeadersNoAuth = {       
         "Content-Type" : "application/json",
@@ -31,6 +36,7 @@ export const callFetchFile = (endpoint: string, method: string, json: string) =>
         "responseType": "blob",
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Origin': '*',
+        'Authorization': headerJwt
     };
     
     // myHeadersNoAuth.responseType = "blob";
@@ -52,10 +58,13 @@ export const callFetchFile = (endpoint: string, method: string, json: string) =>
 };
 
 export const callFetchMultipart = (endpoint: string, method: string, data: any) => {
+    const jwt = sessionStorage.getItem("jwt");
+    let headerJwt = "Bearer " + jwt;
     const serverName: string = process.env.REACT_APP_API_DOMAIN + "/" + process.env.REACT_APP_API_CONTEXT_PATH + "/" + process.env.REACT_APP_API_PATH;
     let myHeadersNoAuth = {       
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Origin': '*',
+        'Authorization': headerJwt
     };
     
     // myHeadersNoAuth.responseType = "blob";
