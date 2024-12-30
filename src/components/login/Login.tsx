@@ -36,7 +36,7 @@ const Login = () => {
           return;
         }
         
-        const jwtJson= await response.json();
+        const jwtJson = await response.json();
 
         sessionStorage.setItem("jwt", jwtJson.jwt);
 

@@ -2,35 +2,44 @@ export const callFetch = (endpoint: string, method: string, json: string) => {
     const jwt = sessionStorage.getItem("jwt");
     let headerJwt = "Bearer " + jwt;
     const serverName: string = process.env.REACT_APP_API_DOMAIN + "/" + process.env.REACT_APP_API_CONTEXT_PATH + "/" + process.env.REACT_APP_API_PATH;
-    let myHeadersNoAuth = {       
-        "Content-Type" : "application/json",
-        "Accept" : "application/json",
 
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': headerJwt
+    const myHeaders = {
+      "Content-Type" : "application/json",
+      "Accept" : "application/json",
+  
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Origin': '*',
+      'Authorization': headerJwt,
+    };
+
+    const myHeadersNoAuth = {       
+      "Content-Type" : "application/json",
+      "Accept" : "application/json",
+
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Origin': '*',
     };
     
     const finalEndpoint = serverName + endpoint;
+    
+    let myInit = {method: method, headers: jwt ? myHeaders : myHeadersNoAuth};
 
-    let myInit = {method: method, headers: myHeadersNoAuth};
-
-    let myInitWithBody = {method: method, headers: myHeadersNoAuth, body: json};
+    let myInitWithBody = {method: method, headers: jwt ? myHeaders : myHeadersNoAuth, body: json};
 
 
 
     if (json) {
-        return fetch (finalEndpoint, myInitWithBody);
+        return fetch(finalEndpoint, myInitWithBody);
     }
 
-    return (fetch (finalEndpoint, myInit));
+    return fetch(finalEndpoint, myInit);
     
 };
 export const callFetchFile = (endpoint: string, method: string, json: string) => {
     const jwt = sessionStorage.getItem("jwt");
     let headerJwt = "Bearer " + jwt;
     const serverName: string = process.env.REACT_APP_API_DOMAIN + "/" + process.env.REACT_APP_API_CONTEXT_PATH + "/" + process.env.REACT_APP_API_PATH;
-    let myHeadersNoAuth = {       
+    let myHeaders = {       
         "Content-Type" : "application/json",
         "Accept" : "application/json",
         "responseType": "blob",
@@ -43,9 +52,9 @@ export const callFetchFile = (endpoint: string, method: string, json: string) =>
 
     const finalEndpoint = serverName + endpoint;
 
-    let myInit = {method: method, headers: myHeadersNoAuth};
+    let myInit = {method: method, headers: myHeaders};
 
-    let myInitWithBody = {method: method, headers: myHeadersNoAuth, body: json};
+    let myInitWithBody = {method: method, headers: myHeaders, body: json};
 
     
 
@@ -61,7 +70,7 @@ export const callFetchMultipart = (endpoint: string, method: string, data: any) 
     const jwt = sessionStorage.getItem("jwt");
     let headerJwt = "Bearer " + jwt;
     const serverName: string = process.env.REACT_APP_API_DOMAIN + "/" + process.env.REACT_APP_API_CONTEXT_PATH + "/" + process.env.REACT_APP_API_PATH;
-    let myHeadersNoAuth = {       
+    let myHeaders = {       
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Origin': '*',
         'Authorization': headerJwt
@@ -71,9 +80,9 @@ export const callFetchMultipart = (endpoint: string, method: string, data: any) 
 
     const finalEndpoint = serverName + endpoint;
 
-    let myInit = {method: method, headers: myHeadersNoAuth};
+    let myInit = {method: method, headers: myHeaders};
 
-    let myInitWithBody = {method: method, headers: myHeadersNoAuth, body: data};
+    let myInitWithBody = {method: method, headers: myHeaders, body: data};
 
     
 
