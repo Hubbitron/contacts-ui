@@ -71,7 +71,7 @@ const ContactEdit = () => {
       return;
     }
 
-    navigate("/");
+    navigate("/contactlist");
   }
 
   const stateDropdownList = stateList.map((item: any) => 
