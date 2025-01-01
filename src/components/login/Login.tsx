@@ -30,18 +30,18 @@ const Login = () => {
     
         const httpMethod = "POST";
         const endpoint = "/authenticate";
-        const response = await callFetch(endpoint, httpMethod, JSON.stringify(credentials));
-        if (!response.ok) {
+        let response = await callFetch(endpoint, httpMethod, JSON.stringify(credentials));
+        const jwtJson = await response.json();
+        if (!jwtJson.jwt) {
           alert("Invalid Credentials");
           return;
         }
         
-        const jwtJson = await response.json();
-
         sessionStorage.setItem("jwt", jwtJson.jwt);
 
-        const userAccount = await callFetch("/getUser/" + formObj.username, "GET", "");
-        console.log("User is ", userAccount);
+        response = await callFetch("/getUser/" + formObj.username, "GET", "");
+
+        const userAccount: UserAccount = await response.json();
         navigate("/contactlist");
     }
     return(
