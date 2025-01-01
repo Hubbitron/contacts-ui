@@ -52,7 +52,6 @@ const ContactEdit = () => {
     contact.middleName = formObj.middleName;
     contact.firstName = formObj.firstName;
     contact.dob = formObj.dob;
-    contact.addressLine1 = formObj.addressLine1;
     contact.stateId = formObj.stateId;
 
     const formData: FormData = new FormData();
@@ -72,7 +71,7 @@ const ContactEdit = () => {
       return;
     }
 
-    navigate("/");
+    navigate("/contactlist");
   }
 
   const stateDropdownList = stateList.map((item: any) => 
@@ -134,18 +133,6 @@ const ContactEdit = () => {
                 <div className='field-label'>
                   <input type = "date" className='textbox-large' id="dob"
                     {...register("dob", {valueAsDate: true})}
-                  />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td className='label-align'>
-                Address Line 1
-              </td>
-              <td className='label-align'>
-                <div className='field-label'>
-                  <input type = "text" className='textbox-large' id="addressLine1"
-                    {...register("addressLine1")}
                   />
                 </div>
               </td>

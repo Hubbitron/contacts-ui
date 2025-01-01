@@ -96,9 +96,6 @@ const ContactList = () => {
                                 </div>
                             </TableCell>
                             <TableCell>
-                                Address Line 1
-                            </TableCell>
-                            <TableCell>
                                 Profile Pic
                             </TableCell>
                             <TableCell>
@@ -128,9 +125,6 @@ const ContactList = () => {
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
                                         {formattedDate(row.dob)}
-                                    </TableCell>
-                                    <TableCell className='mat-cell-left'>
-                                        {row.addressLine1}
                                     </TableCell>
                                     <TableCell>
                                         <Button variant = "secondary" type = "button" onClick={() => downloadProfilePic(row.id)}>
