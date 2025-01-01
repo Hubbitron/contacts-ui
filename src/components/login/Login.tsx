@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavigateFunction, useNavigate, useParams } from "react-router";
 import { UserAccount } from "./model/UserAccount";
 import { Credentials } from "../model/Credentials";
 import { callFetch } from "../helper/Global";
 import { Button } from "react-bootstrap";
+import { UserAccountContext } from "../../App";
 
 const Login = () => {
-  
+    
+    const userAccountContext = useContext(UserAccountContext);
+
     let navigate: NavigateFunction = useNavigate();
 
     const form = useForm<Credentials>({
@@ -40,8 +43,10 @@ const Login = () => {
         sessionStorage.setItem("jwt", jwtJson.jwt);
 
         response = await callFetch("/getUser/" + formObj.username, "GET", "");
-
-        const userAccount: UserAccount = await response.json();
+        const user: UserAccount = await response.json();
+        
+        userAccountContext?.setUserAccount(user);
+        console.log('big penises =', userAccountContext?.userAccount?.firstName)
         navigate("/contactlist");
     }
     return(

@@ -5,9 +5,10 @@ import { callFetch, callFetchFile } from '../helper/Global';
 import { Link, NavigateFunction, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
 import { formattedDate } from '../helper/Utilities';
+import { UserAccount } from '../login/model/UserAccount';
 
 const ContactList = () => {
-
+    const [userAccount] = useState<UserAccount>(new UserAccount);
     const [rows, setRows] = useState<Contact[]>([]);
     let navigate: NavigateFunction = useNavigate();
     
@@ -68,6 +69,7 @@ const ContactList = () => {
 
   return(
     <div className='App'>
+        <div>{userAccount.roleId}</div>
         <Button variant = "secondary" type = "button" onClick={onAdd}>
             Add
         </Button>
