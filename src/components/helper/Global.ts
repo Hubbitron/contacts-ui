@@ -22,19 +22,24 @@ export const callFetch = (endpoint: string, method: string, json: string) => {
     
     const finalEndpoint = serverName + endpoint;
     
-    let myInit = {method: method, headers: jwt ? myHeaders : myHeadersNoAuth};
+    let myInit = {
+      method: method,
+      headers: jwt ? myHeaders : myHeadersNoAuth
+    };
 
-    let myInitWithBody = {method: method, headers: jwt ? myHeaders : myHeadersNoAuth, body: json};
-
-
+    let myInitWithBody = {
+      method: method,
+      headers: jwt ? myHeaders : myHeadersNoAuth,
+      body: json
+    };
 
     if (json) {
         return fetch(finalEndpoint, myInitWithBody);
     }
 
     return fetch(finalEndpoint, myInit);
-    
 };
+
 export const callFetchFile = (endpoint: string, method: string, json: string) => {
     const jwt = sessionStorage.getItem("jwt");
     let headerJwt = "Bearer " + jwt;
