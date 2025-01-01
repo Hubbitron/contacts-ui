@@ -36,10 +36,12 @@ const Login = () => {
           return;
         }
         
-        const jwtJson= await response.json();
+        const jwtJson = await response.json();
 
         sessionStorage.setItem("jwt", jwtJson.jwt);
 
+        const userAccount = await callFetch("/getUser/" + formObj.username, "GET", "");
+        console.log("User is ", userAccount);
         navigate("/contactlist");
     }
     return(
