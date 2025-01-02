@@ -46,7 +46,7 @@ const Login = () => {
         const user: UserAccount = await response.json();
         
         userAccountContext?.setUserAccount(user);
-        console.log('big penises =', userAccountContext?.userAccount?.firstName)
+
         navigate("/contactlist");
     }
     return(

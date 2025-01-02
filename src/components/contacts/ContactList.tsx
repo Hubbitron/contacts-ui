@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Contact } from './model/Contact'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { callFetch, callFetchFile } from '../helper/Global';
 import { Link, NavigateFunction, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
 import { formattedDate } from '../helper/Utilities';
-import { UserAccount } from '../login/model/UserAccount';
+import { UserAccountContext } from '../../App';
 
 const ContactList = () => {
-    const [userAccount] = useState<UserAccount>(new UserAccount);
+    const userAccountContext = useContext(UserAccountContext);
     const [rows, setRows] = useState<Contact[]>([]);
     let navigate: NavigateFunction = useNavigate();
     
@@ -69,7 +69,7 @@ const ContactList = () => {
 
   return(
     <div className='App'>
-        <div>{userAccount.roleId}</div>
+        <div>{userAccountContext?.userAccount?.roleId}</div>
         <Button variant = "secondary" type = "button" onClick={onAdd}>
             Add
         </Button>
