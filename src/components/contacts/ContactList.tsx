@@ -17,12 +17,17 @@ const ContactList = () => {
     };
 
     const onDelete = async (contact: Contact): Promise<void> => {
-        const result: boolean = window.confirm("Are you sure about this? You really want to delete " + contact.firstName + " " + contact.lastName + " " + "?");
+        const msg = "Are you sure about this? You really want to delete " + contact.firstName + " " + contact.lastName +  "?";
+        const result: boolean = window.confirm(msg);
         if (!result) {
             return;
         }
 
         const response = await callFetch("/delete/" + contact.id, "DELETE", "");
+        if (!response.ok) {
+          alert(response.statusText);
+          return;
+        }
 
         const updatedRows = rows.filter((item: Contact) => 
             contact.id !== item.id
@@ -129,7 +134,8 @@ const ContactList = () => {
                                         {formattedDate(row.dob)}
                                     </TableCell>
                                     <TableCell>
-                                        <Button variant = "secondary" type = "button" onClick={() => downloadProfilePic(row.id)}>
+                                        <Button variant = "secondary" type = "button" onClick={() => downloadProfilePic(row.id)}
+                                          disabled={!row.profilePicFilename ? true : false}>
                                             Download
                                         </Button>
                                     </TableCell>

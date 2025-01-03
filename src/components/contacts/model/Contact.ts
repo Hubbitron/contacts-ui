@@ -6,4 +6,5 @@ export class Contact {
     dob: Date | null = null;
     stateId: number = 0;
     profilePic: File | undefined = undefined;
+    profilePicFilename: string = '';
 }
