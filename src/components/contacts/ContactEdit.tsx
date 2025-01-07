@@ -13,6 +13,10 @@ const ContactEdit = () => {
   
   let navigate: NavigateFunction = useNavigate();
 
+  const onBack = () => {
+    navigate('/contactlist');
+  };
+
   const [stateList, setStateList] = useState<State[]>([]);
 
   const [id] = useState(paramId);
@@ -60,6 +64,7 @@ const ContactEdit = () => {
     contact.homePhone = formObj.homePhone;
     contact.workPhone = formObj.workPhone;
     contact.cellPhone = formObj.cellPhone;
+    
 
     const formData: FormData = new FormData();
     if (formObj.profilePic) {
@@ -259,6 +264,9 @@ const ContactEdit = () => {
         </table>
         <Button variant = "secondary" type = "submit">
           Submit
+        </Button>
+        <Button variant = "secondary" type = "button" onClick={onBack}>
+            Back
         </Button>
       </form>
     </div>
