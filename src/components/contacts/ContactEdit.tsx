@@ -52,6 +52,8 @@ const ContactEdit = () => {
     contact.middleName = formObj.middleName;
     contact.firstName = formObj.firstName;
     contact.dob = formObj.dob;
+    contact.addressLine1 = formObj.addressLine1;
+    contact.addressLine2 = formObj.addressLine2;
     contact.stateId = formObj.stateId;
 
     const formData: FormData = new FormData();
@@ -139,6 +141,42 @@ const ContactEdit = () => {
             </tr>
             <tr>
               <td className='label-align'>
+                Address Line 1
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="addressLine1"
+                    {...register("addressLine1")}
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
+                Address Line 2
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="addressLine2"
+                    {...register("addressLine2")}
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
+                City
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="city"
+                    {...register("city")}
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
                 State
               </td>
               <td className='label-align'>
@@ -149,6 +187,54 @@ const ContactEdit = () => {
                   >
                     {stateDropdownList}
                   </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
+                Zip Code
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="zipCode"
+                    {...register("zipCode")}
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
+                Home Phone
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="homePhone"
+                    {...register("homePhone")}
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
+                Work Phone
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="workPhone"
+                    {...register("workPhone")}
+                  />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td className='label-align'>
+                Cell Phone
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="cellPhone"
+                    {...register("cellPhone")}
+                  />
                 </div>
               </td>
             </tr>
