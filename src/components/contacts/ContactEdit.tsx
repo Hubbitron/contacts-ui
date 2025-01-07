@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { NavigateFunction, useNavigate, useParams } from 'react-router'
 import { callFetch, callFetchMultipart } from '../helper/Global';
 import { Contact } from './model/Contact';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from 'react-bootstrap';
 import { State } from '../model/State';
 
@@ -54,7 +54,12 @@ const ContactEdit = () => {
     contact.dob = formObj.dob;
     contact.addressLine1 = formObj.addressLine1;
     contact.addressLine2 = formObj.addressLine2;
+    contact.city = formObj.city;
     contact.stateId = formObj.stateId;
+    contact.zipCode = formObj.zipCode;
+    contact.homePhone = formObj.homePhone;
+    contact.workPhone = formObj.workPhone;
+    contact.cellPhone = formObj.cellPhone;
 
     const formData: FormData = new FormData();
     if (formObj.profilePic) {
