@@ -76,12 +76,11 @@ const ContactList = () => {
 
   return(
     <div className='App'>
-        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 ?
+        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 &&
         <Button variant = "secondary" type = "button" onClick={onAdd} >
             Add
         </Button>
-        :
-        ''}
+        }
         <Paper className = "paper">
             <TableContainer className = "table-container">
                 <Table>
