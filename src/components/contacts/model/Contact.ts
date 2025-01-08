@@ -8,10 +8,10 @@ export class Contact {
     addressLine2: string = '';
     city: string = '';
     stateId: number = 0;
-    zipCode: number = 0;
-    homePhone: number = 0;
-    workPhone: number = 0;
-    cellPhone: number = 0;
+    zipCode: string = '';
+    homePhone: string = '';
+    workPhone: string = '';
+    cellPhone: string = '';
     profilePic: File | undefined = undefined;
     profilePicFilename: string = '';
 }
