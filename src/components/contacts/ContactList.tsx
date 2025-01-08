@@ -109,14 +109,13 @@ const ContactList = () => {
                             <TableCell>
                                 Profile Pic
                             </TableCell>
-                            <TableCell>
-                            {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 ?
-                                <div>
-                                    Remove
-                                </div>
-                            :
-                            ''}
-                            </TableCell>
+                            {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 &&
+                                <TableCell>
+                                    <div>
+                                        Remove
+                                    </div>
+                                </TableCell>
+                            }
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -152,14 +151,13 @@ const ContactList = () => {
                                             Download
                                         </Button>
                                     </TableCell>
-                                    <TableCell className='mat-cell-left'>
-                                    {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 ?
-                                        <Button variant = "secondary" type = "button" onClick={() => onDelete(row)}>
-                                            X
-                                        </Button>
-                                        :
-                                        ''}
-                                    </TableCell>
+                                    {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 &&
+                                        <TableCell className='mat-cell-left'>
+                                            <Button variant = "secondary" type = "button" onClick={() => onDelete(row)}>
+                                                X
+                                            </Button>
+                                        </TableCell>
+                                     }   
                                 </TableRow>
                             )
                         })}
