@@ -14,6 +14,7 @@ const ContactList = () => {
     
     const onAdd = () => {
         navigate('/contactedit/0');
+        
     };
 
     const onDelete = async (contact: Contact): Promise<void> => {
@@ -70,14 +71,17 @@ const ContactList = () => {
             link.parentNode.removeChild(link);
         }
         setTimeout(() => window.URL.revokeObjectURL(url), 500);
+
     };
 
   return(
     <div className='App'>
-        <div>{userAccountContext?.userAccount?.roleId}</div>
-        <Button variant = "secondary" type = "button" onClick={onAdd}>
+        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 ?
+        <Button variant = "secondary" type = "button" onClick={onAdd} >
             Add
         </Button>
+        :
+        ''}
         <Paper className = "paper">
             <TableContainer className = "table-container">
                 <Table>
@@ -106,9 +110,12 @@ const ContactList = () => {
                                 Profile Pic
                             </TableCell>
                             <TableCell>
+                            {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 ?
                                 <div>
                                     Remove
                                 </div>
+                            :
+                            ''}
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -120,9 +127,15 @@ const ContactList = () => {
                                         {row.id}
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
-                                        <Link to = {"/contactedit/" + row.id} className="hyperlink">
-                                            {row.lastName}
-                                        </Link>
+                                        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 ? 
+                                            <Link to = {"/contactedit/" + row.id} className="hyperlink">
+                                                {row.lastName}
+                                            </Link>
+                                        : 
+                                            <div>
+                                                {row.lastName}
+                                            </div>
+                                        }
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
                                         {row.middleName}
@@ -140,9 +153,12 @@ const ContactList = () => {
                                         </Button>
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
+                                    {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 ?
                                         <Button variant = "secondary" type = "button" onClick={() => onDelete(row)}>
                                             X
                                         </Button>
+                                        :
+                                        ''}
                                     </TableCell>
                                 </TableRow>
                             )
