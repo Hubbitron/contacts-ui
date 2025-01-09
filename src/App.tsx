@@ -7,6 +7,7 @@ import ContactEdit from './components/contacts/ContactEdit';
 import Login from './components/login/Login';
 import { createContext } from 'react';
 import { UserAccount } from './components/login/model/UserAccount';
+import AboutPage from './components/about-page/AboutPage';
 
 type UserAccountContextType = {
   userAccount: UserAccount | null;
@@ -32,6 +33,9 @@ function App() {
             }/>
             <Route path="/contactedit/:paramId" element = {
               <ContactEdit/>
+            }/>
+            <Route path="/aboutpage" element = {
+              <AboutPage/>
             }/>
           </Routes>
         </BrowserRouter>
