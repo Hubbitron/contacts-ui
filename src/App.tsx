@@ -8,6 +8,7 @@ import Login from './components/login/Login';
 import { createContext } from 'react';
 import { UserAccount } from './components/login/model/UserAccount';
 import AboutPage from './components/about-page/AboutPage';
+import ProtectedRoutes from './components/helper/ProtectedRoutes';
 
 type UserAccountContextType = {
   userAccount: UserAccount | null;
@@ -29,13 +30,19 @@ function App() {
               <Login/>
             }/>
             <Route path="/contactlist" element = {
-              <ContactList/>
+              <ProtectedRoutes>
+                <ContactList/>
+              </ProtectedRoutes>
             }/>
             <Route path="/contactedit/:paramId" element = {
-              <ContactEdit/>
+              <ProtectedRoutes>
+                <ContactEdit/>
+              </ProtectedRoutes>
             }/>
-            <Route path="/aboutpage" element = {
-              <AboutPage/>
+            <Route path="/AboutPage" element = {
+              <ProtectedRoutes>
+                <AboutPage/>
+              </ProtectedRoutes>
             }/>
           </Routes>
         </BrowserRouter>
