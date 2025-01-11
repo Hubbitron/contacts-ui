@@ -15,18 +15,57 @@ const ContactList = () => {
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(5);
 
+    const [order, setOrder] = useState<string>("ASC");
+    const [sortColumn, setSortColumn] = useState<string>('');
+
     const handlePageChange = (event: any, newPage: any) => {
         setPage(newPage);
-    }
+    };
 
     const handleRowsPerPageChange = (event: any) => {
         setRowsPerPage(event.target.value);
         setPage(0);
-    }
+    };
 
     const onAdd = () => {
         navigate('/contactedit/0');
         
+    };
+
+    const getSortArrow = (col: any, sortColumn: string, order: string) => {
+        return sortColumn !== col ? '' : order === "ASC" ? '↓' : '↑';
+    }
+
+    const sortTableColumn = (col: any, sortColumn: string, order: string, rows: any[]): any => {
+        let inverseOrder: string = order === "ASC" ? "DSC" : "ASC";
+        if (col !== sortColumn) {
+            order = "ASC";
+            inverseOrder = "DSC";
+        }
+
+        let sortedRows: Contact[] = [];
+
+        if (order === "ASC") {
+            sortedRows = [...rows].sort((a, b) => 
+                a[col] < b[col] ? 1 : -1
+            );
+        } else {
+            sortedRows = [...rows].sort((a, b) => 
+                a[col] > b[col] ? 1 : -1
+            );    
+        }
+
+        return {
+            sortedRows: sortedRows, 
+            inverseOrder: inverseOrder
+        };
+    };
+
+    const sortCol = (col: string) => {
+        const result = sortTableColumn(col, sortColumn, order, rows);
+        setRows(result.sortedRows);
+        setOrder(result.inverseOrder);
+        setSortColumn(col);
     };
 
     const onDelete = async (contact: Contact): Promise<void> => {
@@ -99,22 +138,27 @@ const ContactList = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>
-                                <div className='mat-header-cell-left'>
-                                    ID
+                                <div className = "mat-header-cell-left-sortable" onClick = {() => sortCol("lastName")}>
+                                    Last Name
+                                    {getSortArrow("lastName", sortColumn, order)}
                                 </div>
                             </TableCell>
                             <TableCell>
-                                Last Name
+                                <div className = "mat-header-cell-left-sortable" onClick = {() => sortCol("middleName")}>
+                                    Middle Name
+                                    {getSortArrow("middleName", sortColumn, order)}
+                                </div>
                             </TableCell>
                             <TableCell>
-                                Middle Name
+                                <div className = "mat-header-cell-left-sortable" onClick = {() => sortCol("firstName")}>
+                                    First Name
+                                    {getSortArrow("firstName", sortColumn, order)}
+                                </div>
                             </TableCell>
                             <TableCell>
-                                First Name
-                            </TableCell>
-                            <TableCell>
-                                <div className='mat-header-cell-left'>
-                                DOB
+                                <div className = "mat-header-cell-left-sortable" onClick = {() => sortCol("dob")}>
+                                    DOB
+                                    {getSortArrow("dob", sortColumn, order)}
                                 </div>
                             </TableCell>
                             <TableCell>
@@ -133,9 +177,6 @@ const ContactList = () => {
                         {rows && rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: Contact, i: number) => {
                             return (
                                 <TableRow key={row.id} className = {i % 2 === 0 ? 'even' : 'odd'} >
-                                    <TableCell className='mat-cell-left'>
-                                        {row.id}
-                                    </TableCell>
                                     <TableCell className='mat-cell-left'>
                                         {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 ? 
                                             <Link to = {"/contactedit/" + row.id} className="hyperlink">
@@ -176,13 +217,13 @@ const ContactList = () => {
                 </Table>
             </TableContainer>
             <TablePagination className = "paginator"
-            rowsPerPageOptions={[5,10,15,20,25,30,35,40]}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            count={rows.length}
-            component="div"
-            onPageChange={handlePageChange}
-            onRowsPerPageChange={handleRowsPerPageChange}
+                rowsPerPageOptions={[5,10,15,20,25,30,35,40]}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                count={rows.length}
+                component="div"
+                onPageChange={handlePageChange}
+                onRowsPerPageChange={handleRowsPerPageChange}
             />
         </Paper>
     </div>
