@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Contact } from './model/Contact'
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import { callFetch, callFetchFile } from '../helper/Global';
 import { Link, NavigateFunction, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
@@ -11,7 +11,19 @@ const ContactList = () => {
     const userAccountContext = useContext(UserAccountContext);
     const [rows, setRows] = useState<Contact[]>([]);
     let navigate: NavigateFunction = useNavigate();
-    
+
+    const [page, setPage] = useState<number>(0);
+    const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+
+    const handlePageChange = (event: any, newPage: any) => {
+        setPage(newPage);
+    }
+
+    const handleRowsPerPageChange = (event: any) => {
+        setRowsPerPage(event.target.value);
+        setPage(0);
+    }
+
     const onAdd = () => {
         navigate('/contactedit/0');
         
@@ -118,7 +130,7 @@ const ContactList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row: Contact, i: number) => {
+                        {rows && rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row: Contact, i: number) => {
                             return (
                                 <TableRow key={row.id} className = {i % 2 === 0 ? 'even' : 'odd'} >
                                     <TableCell className='mat-cell-left'>
@@ -163,6 +175,15 @@ const ContactList = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <TablePagination className = "paginator"
+            rowsPerPageOptions={[5,10,15,20,25,30,35,40]}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            count={rows.length}
+            component="div"
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleRowsPerPageChange}
+            />
         </Paper>
     </div>
   );
