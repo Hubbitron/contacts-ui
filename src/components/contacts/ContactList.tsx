@@ -156,6 +156,12 @@ const ContactList = () => {
                                 </div>
                             </TableCell>
                             <TableCell>
+                                <div className = "mat-header-cell-left-sortable" onClick = {() => sortCol("email")}>
+                                     Email
+                                    {getSortArrow("email", sortColumn, order)}
+                                </div>
+                            </TableCell>
+                            <TableCell>
                                 <div className = "mat-header-cell-left-sortable" onClick = {() => sortCol("dob")}>
                                     DOB
                                     {getSortArrow("dob", sortColumn, order)}
@@ -193,6 +199,9 @@ const ContactList = () => {
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
                                         {row.firstName}
+                                    </TableCell>
+                                    <TableCell className='mat-cell-left'>
+                                        {row.email}
                                     </TableCell>
                                     <TableCell className='mat-cell-left'>
                                         {formattedDate(row.dob)}

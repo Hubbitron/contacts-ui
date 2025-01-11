@@ -5,6 +5,7 @@ import { Contact } from './model/Contact';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Button } from 'react-bootstrap';
 import { State } from '../model/State';
+import { regExPhoneNumber, regExZipCode } from '../helper/RegXPatterns'
 
 const ContactEdit = () => {
   
@@ -41,8 +42,10 @@ const ContactEdit = () => {
     const getStates = async(): Promise<void> => {
       const response = await callFetch("/getStates", "GET", "");
       const rowsFromServer: State[] = await response.json();
+      const blankState: State = new State();
+      const stateListBlank: State[] = [blankState, ...rowsFromServer];
 
-      setStateList(rowsFromServer);
+      setStateList(stateListBlank);
     };
 
     getStates();
@@ -52,6 +55,7 @@ const ContactEdit = () => {
   const onSubmit = async (formObj: any): Promise<void> => {
     const contact = new Contact();
     contact.id = formObj.id;
+    contact.email = formObj.email;
     contact.lastName = formObj.lastName;
     contact.middleName = formObj.middleName;
     contact.firstName = formObj.firstName;
@@ -101,16 +105,34 @@ const ContactEdit = () => {
       <form name="ContactEdit" id="ContactEdit" onSubmit={handleSubmit(onSubmit)}>
         <table>
           <tbody>
+          <tr>
+              <td className='label-align'>
+                Email
+              </td>
+              <td className='label-align'>
+                <div className='field-label'>
+                  <input type = "text" className='textbox-large' id="email"
+                    {...register("email")}
+                  />
+                </div>
+              </td>
+            </tr>
             <tr>
               <td className='label-align'>
                 Last Name
               </td>
-              <td className='label-align'>
-                <div className='field-label'>
+              <td className='label-align-char'>
                   <input type = "text" className='textbox-large' id="lastName"
-                    {...register("lastName")}
+                    {...register("lastName", {
+                      required: { 
+                        value: true,
+                        message: "Last Name is required." 
+                      }
+                    })}
                   />
-                </div>
+                  <p className='error-message'>
+                    {errors.lastName?.message}
+                  </p>
               </td>
             </tr>
             <tr>
@@ -129,36 +151,55 @@ const ContactEdit = () => {
               <td className='label-align'>
                 First Name
               </td>
-              <td className='label-align'>
-                <div className='field-label'>
+              <td className='label-align-char'>
                   <input type = "text" className='textbox-large' id="firstName"
-                    {...register("firstName")}
+                    {...register("firstName", {
+                      required: { 
+                        value: true,
+                        message: "First Name is required." 
+                      }
+                    })}
                   />
-                </div>
+                  <p className='error-message'>
+                    {errors.firstName?.message}
+                  </p>
               </td>
             </tr>
             <tr>
-              <td className='label-align'>
+              <td className='label-align-char'>
                 DOB
               </td>
-              <td className='label-align'>
-                <div className='field-label'>
+              <td className='label-align-char'>
                   <input type = "date" className='textbox-large' id="dob"
-                    {...register("dob", {valueAsDate: true})}
+                    {...register("dob", {
+                      valueAsDate: true,
+                      required: { 
+                        value: true,
+                        message: "Date of Birth is required." 
+                      }
+                    })}
                   />
-                </div>
+                  <p className='error-message'>
+                    {errors.dob?.message}
+                  </p>
               </td>
             </tr>
             <tr>
               <td className='label-align'>
                 Address Line 1
               </td>
-              <td className='label-align'>
-                <div className='field-label'>
+              <td className='label-align-char'>
                   <input type = "text" className='textbox-large' id="addressLine1"
-                    {...register("addressLine1")}
+                    {...register("addressLine1", {
+                      required: { 
+                        value: true,
+                        message: "Address is required." 
+                      }
+                    })}
                   />
-                </div>
+                  <p className='error-message'>
+                    {errors.addressLine1?.message}
+                  </p>
               </td>
             </tr>
             <tr>
@@ -177,75 +218,119 @@ const ContactEdit = () => {
               <td className='label-align'>
                 City
               </td>
-              <td className='label-align'>
-                <div className='field-label'>
+              <td className='label-align-char'>
                   <input type = "text" className='textbox-large' id="city"
-                    {...register("city")}
+                    {...register("city", {
+                      required: { 
+                        value: true,
+                        message: "City is required." 
+                      }
+                    })}
                   />
-                </div>
+                  <p className='error-message'>
+                    {errors.city?.message}
+                  </p>
               </td>
             </tr>
             <tr>
               <td className='label-align'>
                 State
               </td>
-              <td className='label-align'>
-                <div className='field-align-char'>
+              <td className='label-align-char'>
                   <select
-                    {...register("stateId")} 
-                    value = {watch("stateId")}
-                  >
+                    {...register("stateId", {
+                        validate: (fieldValue: number) => {
+                          return (
+                            fieldValue > 0 || "Must select state"
+                          );
+                        }
+                    })}
+                    value = {watch("stateId")}>
                     {stateDropdownList}
                   </select>
-                </div>
+                  <p className='error-message'>
+                    {errors.stateId?.message}
+                  </p>
               </td>
             </tr>
             <tr>
               <td className='label-align'>
                 Zip Code
               </td>
-              <td className='label-align'>
-                <div className='field-label'>
+              <td className='label-align-char'>
                   <input type = "text" className='textbox-large' id="zipCode"
-                    {...register("zipCode")}
+                    {...register("zipCode", {
+                        required: { 
+                          value: true,
+                          message: "Zipcode is required." 
+                        },
+                        pattern: {
+                          value: regExZipCode,
+                          message: "Invalid Zipcode Format"
+                        }
+                    })}
                   />
-                </div>
+                  <p className='error-message'>
+                    {errors.zipCode?.message}
+                  </p>
               </td>
             </tr>
             <tr>
               <td className='label-align'>
                 Home Phone
               </td>
-              <td className='label-align'>
-                <div className='field-label'>
+              <td className='label-align-char'>
                   <input type = "text" className='textbox-large' id="homePhone"
-                    {...register("homePhone")}
+                    {...register("homePhone", {
+                        required: { 
+                          value: true,
+                          message: "Home phone number is required." 
+                        },
+                        pattern: {
+                          value: regExPhoneNumber,
+                          message: "Invalid Phone Format"
+                        }
+                    })}
                   />
-                </div>
+                  <p className='error-message'>
+                    {errors.homePhone?.message}
+                  </p>
               </td>
             </tr>
             <tr>
               <td className='label-align'>
                 Work Phone
               </td>
-              <td className='label-align'>
-                <div className='field-label'>
+              <td className='label-align-char'>
                   <input type = "text" className='textbox-large' id="workPhone"
-                    {...register("workPhone")}
+                    {...register("workPhone", {
+                        pattern: {
+                          value: regExPhoneNumber,
+                          message: "Invalid Phone Format"
+                        }
+                    })}
                   />
-                </div>
+                  <p className='error-message'>
+                    {errors.homePhone?.message}
+                  </p>
               </td>
             </tr>
             <tr>
               <td className='label-align'>
                 Cell Phone
               </td>
-              <td className='label-align'>
-                <div className='field-label'>
+              <td className='label-align-char'>
                   <input type = "text" className='textbox-large' id="cellPhone"
-                    {...register("cellPhone")}
-                  />
-                </div>
+                    {...register("cellPhone", {
+                      pattern: {
+                        value: regExPhoneNumber,
+                        message: "Invalid Phone Format"
+                      }
+                  })}
+                />
+                <p className='error-message'>
+                  {errors.homePhone?.message}
+                </p>
               </td>
             </tr>
             <tr>
@@ -262,7 +347,7 @@ const ContactEdit = () => {
             </tr>
           </tbody>
         </table>
-        <Button variant = "secondary" type = "submit">
+        <Button variant = "secondary" type = "submit" disabled={!isValid}>
           Submit
         </Button>
         <Button variant = "secondary" type = "button" onClick={onBack}>

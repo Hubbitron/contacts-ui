@@ -1,5 +1,6 @@
 export class Contact {
     id: number = 0;
+    email: string = '';
     lastName: string = '';
     middleName: string = '';
     firstName: string = '';
