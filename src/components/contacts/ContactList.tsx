@@ -118,9 +118,9 @@ const ContactList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row: Contact) => {
+                        {rows.map((row: Contact, i: number) => {
                             return (
-                                <TableRow key={row.id}>
+                                <TableRow key={row.id} className = {i % 2 === 0 ? 'even' : 'odd'} >
                                     <TableCell className='mat-cell-left'>
                                         {row.id}
                                     </TableCell>
