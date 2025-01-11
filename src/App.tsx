@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import ContactList from './components/contacts/ContactList';
 import { BrowserRouter, Route, Router, Routes } from 'react-router';
@@ -9,6 +8,7 @@ import { createContext } from 'react';
 import { UserAccount } from './components/login/model/UserAccount';
 import AboutPage from './components/about-page/AboutPage';
 import ProtectedRoutes from './components/helper/ProtectedRoutes';
+import UserInfo from './components/login/UserInfo';
 
 type UserAccountContextType = {
   userAccount: UserAccount | null;
@@ -22,9 +22,11 @@ function App() {
   // const value = {userAccount, setUserAccount};
   return (
     <div>
+      <BrowserRouter>
+      {userAccount && <UserInfo jwt = {sessionStorage.getItem("jwt")}/>}
       <h1>Hello this is Chris and this is my first react app</h1>
       <UserAccountContext.Provider value = {{userAccount, setUserAccount}}>
-        <BrowserRouter>
+        
           <Routes>
             <Route path="/" element = {
               <Login/>
@@ -45,8 +47,8 @@ function App() {
               </ProtectedRoutes>
             }/>
           </Routes>
-        </BrowserRouter>
       </UserAccountContext.Provider>
+      </BrowserRouter>
     </div>
   );
 }
