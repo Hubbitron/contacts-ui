@@ -9,6 +9,7 @@ import { UserAccount } from './components/login/model/UserAccount';
 import AboutPage from './components/about-page/AboutPage';
 import ProtectedRoutes from './components/helper/ProtectedRoutes';
 import UserInfo from './components/login/UserInfo';
+import Menu from './components/helper/Menu';
 
 type UserAccountContextType = {
   userAccount: UserAccount | null;
@@ -25,6 +26,8 @@ function App() {
       <BrowserRouter>
       {userAccount && <UserInfo jwt = {sessionStorage.getItem("jwt")}/>}
       <h1>Hello this is Chris and this is my first react app</h1>
+      {userAccount && <Menu className = "menu-bar"/>}
+      <p></p>
       <UserAccountContext.Provider value = {{userAccount, setUserAccount}}>
         
           <Routes>
