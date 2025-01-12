@@ -47,11 +47,11 @@ const ContactList = () => {
 
         if (order === "ASC") {
             sortedRows = [...rows].sort((a, b) => 
-                a[col] < b[col] ? 1 : -1
+                b[col] === null || a[col] > b[col] ? 1 : -1
             );
         } else {
             sortedRows = [...rows].sort((a, b) => 
-                a[col] > b[col] ? 1 : -1
+                a[col] === null || a[col] < b[col] ? 1 : -1
             );    
         }
 

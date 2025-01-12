@@ -18,7 +18,7 @@ export const pad = (field: string, length: number, justify: string, withThis: st
     let i = 1;
     let workField = "";
         
-    field = field.trim() + ' ';
+    field = (field + ' ').trim();
     
     if (!field.length)
         field = "";
