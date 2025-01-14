@@ -4,7 +4,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePag
 import { callFetch, callFetchFile } from '../helper/Global';
 import { Link, NavigateFunction, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
-import { formattedDate, sortTableColumn } from '../helper/Utilities';
+import { formattedDate, getSortArrow, sortTableColumn } from '../helper/Utilities';
 import { UserAccountContext } from '../../App';
 
 const ContactList = () => {
@@ -31,10 +31,6 @@ const ContactList = () => {
         navigate('/contactedit/0');
         
     };
-
-    const getSortArrow = (col: any, sortColumn: string, order: string) => {
-        return sortColumn !== col ? '' : order === "ASC" ? '↓' : '↑';
-    }
 
     const sortCol = (col: string) => {
         const result = sortTableColumn(col, sortColumn, order, rows);

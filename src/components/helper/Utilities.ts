@@ -26,6 +26,11 @@ export const sortTableColumn = (col: any, sortColumn: string, order: string, row
 };
 
 
+export const getSortArrow = (col: any, sortColumn: string, order: string) => {
+    return sortColumn !== col ? '' : order === "ASC" ? '↓' : '↑';
+}
+
+
 export const formattedDate = (date: Date | null): string => {
     if (date === null)
         return "";
