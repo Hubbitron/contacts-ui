@@ -24,12 +24,12 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-      {userAccount && <UserInfo jwt = {sessionStorage.getItem("jwt")}/>}
-      <h1>Hello this is Chris and this is my first react app</h1>
-      {userAccount && <Menu className = "menu-bar"/>}
-      <p></p>
+
       <UserAccountContext.Provider value = {{userAccount, setUserAccount}}>
-        
+        {userAccount && <UserInfo jwt = {sessionStorage.getItem("jwt")}/>}
+          <h1>Hello this is Chris and this is my first react app</h1>
+        {userAccount && <Menu className = "menu-bar"/>}
+        <p></p>
           <Routes>
             <Route path="/" element = {
               <Login/>
@@ -44,9 +44,14 @@ function App() {
                 <ContactEdit/>
               </ProtectedRoutes>
             }/>
-            <Route path="/AboutPage" element = {
+            <Route path="/aboutpage" element = {
               <ProtectedRoutes>
                 <AboutPage/>
+              </ProtectedRoutes>
+            }/>
+            <Route path="/contactSearch/:paramId" element = {
+              <ProtectedRoutes>
+                <ContactEdit/>
               </ProtectedRoutes>
             }/>
           </Routes>
