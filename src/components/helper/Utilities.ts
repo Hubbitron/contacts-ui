@@ -1,3 +1,31 @@
+import { Contact } from "../contacts/model/Contact";
+
+export const sortTableColumn = (col: any, sortColumn: string, order: string, rows: any[]): any => {
+    let inverseOrder: string = order === "ASC" ? "DSC" : "ASC";
+    if (col !== sortColumn) {
+        order = "ASC";
+        inverseOrder = "DSC";
+    }
+
+    let sortedRows: Contact[] = [];
+
+    if (order === "ASC") {
+        sortedRows = [...rows].sort((a, b) => 
+            b[col] === null || a[col] > b[col] ? 1 : -1
+        );
+    } else {
+        sortedRows = [...rows].sort((a, b) => 
+            a[col] === null || a[col] < b[col] ? 1 : -1
+        );    
+    }
+
+    return {
+        sortedRows: sortedRows, 
+        inverseOrder: inverseOrder
+    };
+};
+
+
 export const formattedDate = (date: Date | null): string => {
     if (date === null)
         return "";
