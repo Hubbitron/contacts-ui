@@ -189,6 +189,7 @@ h1, h2, h3, h4 {
   .error-message {
     color: red;
     font-weight: bold;
+    text-align: left !important;
   }
 
   .bold-font {

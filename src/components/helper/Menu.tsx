@@ -26,7 +26,6 @@ const Menu = (props: MenuProps) => {
                         Search
                     </NavDropdown.Item>
                 </NavDropdown>
-
                 <Nav.Link onClick={() => handleMenuSelect("/aboutpage")}>
                     <div className='menu-link'>
                         About

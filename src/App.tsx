@@ -10,6 +10,7 @@ import AboutPage from './components/about-page/AboutPage';
 import ProtectedRoutes from './components/helper/ProtectedRoutes';
 import UserInfo from './components/login/UserInfo';
 import Menu from './components/helper/Menu';
+import ContactSearch from './components/contacts/ContactSearch';
 
 type UserAccountContextType = {
   userAccount: UserAccount | null;
@@ -49,9 +50,9 @@ function App() {
                 <AboutPage/>
               </ProtectedRoutes>
             }/>
-            <Route path="/contactSearch/:paramId" element = {
+            <Route path="/searchcontact" element = {
               <ProtectedRoutes>
-                <ContactEdit/>
+                <ContactSearch/>
               </ProtectedRoutes>
             }/>
           </Routes>

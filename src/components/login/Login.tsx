@@ -61,9 +61,17 @@ const Login = () => {
                             </td>
                             <td className='label-align'>
                                 <div className='field-label'>
-                                    <input type = "text" className='textbox-large' id="username"
-                                        {...register("username")}
-                                    />
+                                <input type = "text" className='textbox-large' id="username"
+                                {...register("username", {
+                                required: { 
+                                value: true,
+                                message: "Username is required." 
+                                }
+                            })}
+                                />
+                                <p className='error-message'>
+                                {errors.username?.message}
+                                </p>
                                 </div>
                             </td>
                         </tr>
@@ -73,9 +81,17 @@ const Login = () => {
                             </td>
                             <td className='label-align'>
                                 <div className='field-label'>
-                                    <input type = "password" className='textbox-large' id="password"
-                                        {...register("password")}
-                                    />
+                                <input type = "password" className='textbox-large' id="password"
+                                    {...register("password", {
+                                    required: { 
+                                    value: true,
+                                    message: "Password is required." 
+                                    }
+                                })}
+                                />
+                                <p className='error-message'>
+                                {errors.password?.message}
+                                </p>
                                 </div>
                             </td>
                         </tr>

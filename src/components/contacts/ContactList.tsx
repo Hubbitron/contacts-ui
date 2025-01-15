@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Contact } from './model/Contact'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import { callFetch, callFetchFile } from '../helper/Global';
-import { Link, NavigateFunction, useNavigate } from 'react-router';
+import { Link, NavigateFunction, useNavigate, useSearchParams } from 'react-router';
 import { Button } from 'react-bootstrap';
 import { formattedDate, getSortArrow, sortTableColumn } from '../helper/Utilities';
 import { UserAccountContext } from '../../App';
@@ -17,6 +17,10 @@ const ContactList = () => {
 
     const [order, setOrder] = useState<string>("ASC");
     const [sortColumn, setSortColumn] = useState<string>('');
+
+    const [searchParams] = useSearchParams();
+    const paramLastName = searchParams.get('lastName');
+    const paramFirstName = searchParams.get('firstName');
 
     const handlePageChange = (event: any, newPage: any) => {
         setPage(newPage);
@@ -63,7 +67,21 @@ const ContactList = () => {
     useEffect(() => {
 
         const getRows = async(): Promise<void> => {
-            const response = await callFetch("/getAll", "GET", "");
+            let queryString: string = '';
+
+            if (paramLastName) {
+                queryString += '&lastName=' + paramLastName;
+            }
+
+            if (paramFirstName) {
+                queryString += '&firstName=' + paramFirstName;
+            }
+                    
+            queryString = queryString.length > 0 ? queryString.substring(1) : '';
+            queryString = '?' + queryString;
+            console.log("queryString" + '' + queryString);
+        
+            const response = await callFetch("/getSome" + queryString, "GET", "");
             const rowsFromServer: Contact[] = await response.json();
             setRows(rowsFromServer);
         };
