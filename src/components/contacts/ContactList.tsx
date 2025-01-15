@@ -21,6 +21,7 @@ const ContactList = () => {
     const [searchParams] = useSearchParams();
     const paramLastName = searchParams.get('lastName');
     const paramFirstName = searchParams.get('firstName');
+    const paramStateId = searchParams.get('stateId');
 
     const handlePageChange = (event: any, newPage: any) => {
         setPage(newPage);
@@ -75,6 +76,10 @@ const ContactList = () => {
 
             if (paramFirstName) {
                 queryString += '&firstName=' + paramFirstName;
+            }
+
+            if (paramStateId) {
+                queryString += '&stateId=' + paramStateId;
             }
                     
             queryString = queryString.length > 0 ? queryString.substring(1) : '';
