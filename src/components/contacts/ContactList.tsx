@@ -4,7 +4,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePag
 import { callFetch, callFetchFile } from '../helper/Global';
 import { Link, NavigateFunction, useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
-import { formattedDate } from '../helper/Utilities';
+import { formattedDate, getSortArrow, sortTableColumn } from '../helper/Utilities';
 import { UserAccountContext } from '../../App';
 
 const ContactList = () => {
@@ -30,35 +30,6 @@ const ContactList = () => {
     const onAdd = () => {
         navigate('/contactedit/0');
         
-    };
-
-    const getSortArrow = (col: any, sortColumn: string, order: string) => {
-        return sortColumn !== col ? '' : order === "ASC" ? '↓' : '↑';
-    }
-
-    const sortTableColumn = (col: any, sortColumn: string, order: string, rows: any[]): any => {
-        let inverseOrder: string = order === "ASC" ? "DSC" : "ASC";
-        if (col !== sortColumn) {
-            order = "ASC";
-            inverseOrder = "DSC";
-        }
-
-        let sortedRows: Contact[] = [];
-
-        if (order === "ASC") {
-            sortedRows = [...rows].sort((a, b) => 
-                b[col] === null || a[col] > b[col] ? 1 : -1
-            );
-        } else {
-            sortedRows = [...rows].sort((a, b) => 
-                a[col] === null || a[col] < b[col] ? 1 : -1
-            );    
-        }
-
-        return {
-            sortedRows: sortedRows, 
-            inverseOrder: inverseOrder
-        };
     };
 
     const sortCol = (col: string) => {
