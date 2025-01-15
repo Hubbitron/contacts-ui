@@ -52,6 +52,20 @@ const ContactEdit = () => {
 
   },[]);
 
+  const updateFilename = (event: any) => {
+    const filePath: string = event.target.value;
+    console.log(filePath);
+    if (filePath && filePath.length > 0) {
+      form.setValue("profilePicFilename", filePath.substring(12));
+
+    }
+  };
+
+  const clearFileName = () => {
+    form.setValue("profilePicFilename", '');
+    form.setValue("profilePic", undefined);
+  };
+
   const onSubmit = async (formObj: any): Promise<void> => {
     const contact = new Contact();
     contact.id = formObj.id;
@@ -76,8 +90,6 @@ const ContactEdit = () => {
     }
     
     formData.append('json', JSON.stringify(contact));
-    
-
 
     const httpMethod = formObj.id === 0 ? "POST" : "PUT";
     const endpoint = formObj.id === 0 ? "/insert" : "/update";
@@ -109,7 +121,7 @@ const ContactEdit = () => {
               <td className='label-align'>
                 Email
               </td>
-              <td className='label-align'>
+              <td className='label-align-char'>
                 <div className='field-label'>
                   <input type = "text" className='textbox-large' id="email"
                     {...register("email")}
@@ -139,7 +151,7 @@ const ContactEdit = () => {
               <td className='label-align'>
                 Middle Name
               </td>
-              <td className='label-align'>
+              <td className='label-align-char'>
                 <div className='field-label'>
                   <input type = "text" className='textbox-large' id="middleName"
                     {...register("middleName")}
@@ -166,7 +178,7 @@ const ContactEdit = () => {
               </td>
             </tr>
             <tr>
-              <td className='label-align-char'>
+              <td className='label-align'>
                 DOB
               </td>
               <td className='label-align-char'>
@@ -206,7 +218,7 @@ const ContactEdit = () => {
               <td className='label-align'>
                 Address Line 2
               </td>
-              <td className='label-align'>
+              <td className='label-align-char'>
                 <div className='field-label'>
                   <input type = "text" className='textbox-large' id="addressLine2"
                     {...register("addressLine2")}
@@ -337,10 +349,25 @@ const ContactEdit = () => {
               <td className='label-align'>
                 File
               </td>
-              <td className='label-align'>
+              <td className='label-align-char'>
                 <div className='field-label'>
+                  {watch ("profilePicFilename") !== '' &&
+                    <Button variant= "secondary"  disabled={!isValid} onClick={clearFileName}>
+                      X
+                    </Button>
+                  }
+                  &nbsp;&nbsp;
+                  <input 
+                    type = "hidden" 
+                    className='textbox-extra-large' 
+                    id= "profilePicFilename"
+                    {...register("profilePicFilename")}
+                  /> 
+                  {watch ("profilePicFilename")} 
+                  <p></p>
                   <input type = "file" className='textbox-large' id="profilePic"
                     {...register("profilePic")}
+                    onChange={updateFilename}
                   />
                 </div>
               </td>
@@ -350,6 +377,7 @@ const ContactEdit = () => {
         <Button variant = "secondary" type = "submit" disabled={!isValid}>
           Submit
         </Button>
+        &nbsp;&nbsp;
         <Button variant = "secondary" type = "button" onClick={onBack}>
             Back
         </Button>

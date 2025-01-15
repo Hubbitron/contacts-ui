@@ -84,8 +84,7 @@ const ContactList = () => {
                     
             queryString = queryString.length > 0 ? queryString.substring(1) : '';
             queryString = '?' + queryString;
-            console.log("queryString" + '' + queryString);
-        
+                    
             const response = await callFetch("/getSome" + queryString, "GET", "");
             const rowsFromServer: Contact[] = await response.json();
             setRows(rowsFromServer);
