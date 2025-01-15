@@ -15,4 +15,5 @@ export class Contact {
     cellPhone: string = '';
     profilePic: File | undefined = undefined;
     profilePicFilename: string = '';
+    stateName: string = '';
 }
