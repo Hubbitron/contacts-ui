@@ -54,10 +54,8 @@ const ContactEdit = () => {
 
   const updateFilename = (event: any) => {
     const filePath: string = event.target.value;
-    console.log(filePath);
     if (filePath && filePath.length > 0) {
       form.setValue("profilePicFilename", filePath.substring(12));
-
     }
   };
 

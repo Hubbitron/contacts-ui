@@ -7,9 +7,9 @@ interface ProtectedRoutesProps {
 }
 
 const ProtectedRoutes = (props: ProtectedRoutesProps) => {
-    const userAccountContext = useContext(UserAccountContext);
-    if (userAccountContext?.userAccount === null) {
-        return <Navigate to = "/" />;
+  let jwt = sessionStorage.getItem("jwt");
+    if (!jwt || jwt === '') {
+      return <Navigate to = "/" />;
     }
 
     return props.children;

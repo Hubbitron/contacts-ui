@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
 import ContactList from './components/contacts/ContactList';
-import { BrowserRouter, Route, Router, Routes } from 'react-router';
+import { BrowserRouter, Navigate, Route, Router, Routes } from 'react-router';
 import ContactEdit from './components/contacts/ContactEdit';
 import Login from './components/login/Login';
 import { createContext } from 'react';
@@ -21,7 +21,65 @@ export const UserAccountContext = createContext<UserAccountContextType | null>(n
 
 function App() {
   const [userAccount, setUserAccount] = useState<UserAccount | null>(null);
-  // const value = {userAccount, setUserAccount};
+
+  useEffect(() => {
+    const checkForInactivity = () => {
+
+      const expireTime = sessionStorage.getItem("expireTime");
+
+      if (!expireTime) {
+        return;
+      }
+      
+      if (parseInt(expireTime) >= Date.now()) {
+        return;
+      }
+
+      let jwt = sessionStorage.getItem("jwt");
+      if (!jwt || jwt === '') {
+        return;
+      }
+
+      sessionStorage.removeItem('jwt');
+      alert("You have been logged after 15 minutes of inactivity.");
+      //TODO replace hard coded 15 with value from emv file
+      window.document.location = "/";
+    };
+    
+    const interval = setInterval(
+      checkForInactivity,
+      5000 //TODO refactor with env config
+    )
+  
+    return (() => clearInterval(interval));
+  }, []); 
+
+  useEffect(() => {
+    const updateExpireTime = () => {
+      const expireTime: number = Date.now() + 1 * 60 * 1000; //TODO refactor in env config
+      sessionStorage.setItem('expireTime', expireTime + '');
+    };
+
+    const addEventListeners = () => {
+      window.addEventListener("click", updateExpireTime);
+      window.addEventListener("keypress", updateExpireTime);
+      window.addEventListener("scroll", updateExpireTime);
+      window.addEventListener("mousemove", updateExpireTime);
+    };
+
+    const removeEventListeners = () => {
+      window.removeEventListener("click", updateExpireTime);
+      window.removeEventListener("keypress", updateExpireTime);
+      window.removeEventListener("scroll", updateExpireTime);
+      window.removeEventListener("mousemove", updateExpireTime);
+    };
+
+    updateExpireTime();
+    addEventListeners();
+
+    return removeEventListeners;
+  }, []);
+
   return (
     <div>
       <BrowserRouter>
