@@ -48,7 +48,7 @@ function App() {
     
     const interval = setInterval(
       checkForInactivity,
-      5000 //TODO refactor with env config
+      parseInt(process.env.REACT_APP_INACTIVITY_CHECK_INTERVAL_IN_MS as string)
     )
   
     return (() => clearInterval(interval));
@@ -56,7 +56,7 @@ function App() {
 
   useEffect(() => {
     const updateExpireTime = () => {
-      const expireTime: number = Date.now() + 1 * 60 * 1000; //TODO refactor in env config
+      const expireTime: number = Date.now() + parseInt(process.env.REACT_APP_EXP_INTERVAL_IN_MIN as string) * 60 * 1000;
       sessionStorage.setItem('expireTime', expireTime + '');
     };
 

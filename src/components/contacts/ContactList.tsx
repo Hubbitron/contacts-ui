@@ -169,7 +169,7 @@ const ContactList = () => {
                             <TableCell>
                                 Profile Pic
                             </TableCell>
-                            {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 &&
+                            {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.ROLE_ADMIN as string) &&
                                 <TableCell>
                                     <div>
                                         Remove
@@ -183,7 +183,7 @@ const ContactList = () => {
                             return (
                                 <TableRow key={row.id} className = {i % 2 === 0 ? 'even' : 'odd'} >
                                     <TableCell className='mat-cell-left'>
-                                        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 ? 
+                                        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.ROLE_ADMIN as string) ? 
                                             <Link to = {"/contactedit/" + row.id} className="hyperlink">
                                                 {row.lastName}
                                             </Link>
@@ -214,7 +214,7 @@ const ContactList = () => {
                                             Download
                                         </Button>
                                     </TableCell>
-                                    {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === 1 &&
+                                    {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.ROLE_ADMIN as string) &&
                                         <TableCell className='mat-cell-left'>
                                             <Button variant = "secondary" type = "button" onClick={() => onDelete(row)}>
                                                 X
