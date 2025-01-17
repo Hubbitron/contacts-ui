@@ -1,6 +1,10 @@
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { NavigateFunction, useNavigate } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserAccount } from '../login/model/UserAccount';
+import { createContext, useContext } from 'react';
+import { UserAccountContext } from '../../App';
+
 
 interface MenuProps {
     className: string;
@@ -8,6 +12,8 @@ interface MenuProps {
 
 const Menu = (props: MenuProps) => {
     
+    const userAccountContext = useContext(UserAccountContext);
+
     let navigate: NavigateFunction = useNavigate();
 
     const handleMenuSelect = (path: any) => {
@@ -23,6 +29,14 @@ const Menu = (props: MenuProps) => {
                         Contact List
                     </NavDropdown.Item>
                     <NavDropdown.Item eventKey={"/searchcontact"}>
+                        Search
+                    </NavDropdown.Item>
+                </NavDropdown>
+                <NavDropdown title = "Users" id = "nav-dropdown" className = 'nav-dropdown' onSelect = {handleMenuSelect}>
+                    <NavDropdown.Item eventKey={"/userlist"}>
+                        Users
+                    </NavDropdown.Item>
+                    <NavDropdown.Item eventKey={"/searchuser"}>
                         Search
                     </NavDropdown.Item>
                 </NavDropdown>
