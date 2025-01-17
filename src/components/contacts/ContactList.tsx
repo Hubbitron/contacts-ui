@@ -85,7 +85,7 @@ const ContactList = () => {
             queryString = queryString.length > 0 ? queryString.substring(1) : '';
             queryString = '?' + queryString;
                     
-            const response = await callFetch("/getSome" + queryString, "GET", "");
+            const response = await callFetch("/getMultiple" + queryString, "GET", "");
             const rowsFromServer: Contact[] = await response.json();
             setRows(rowsFromServer);
         };
@@ -120,8 +120,8 @@ const ContactList = () => {
 
   return(
     <div className='App'>
-        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.ROLE_ADMIN as string) &&
-        <Button variant = "secondary" type = "button" onClick={onAdd} >
+        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.REACT_APP_ROLE_ADMIN as string) &&
+        <Button variant = "secondary" type = "button" onClick={onAdd} className='my-button'>
             Add
         </Button>
         }
@@ -169,7 +169,7 @@ const ContactList = () => {
                             <TableCell>
                                 Profile Pic
                             </TableCell>
-                            {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.ROLE_ADMIN as string) &&
+                            {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.REACT_APP_ROLE_ADMIN as string) &&
                                 <TableCell>
                                     <div>
                                         Remove
@@ -183,7 +183,7 @@ const ContactList = () => {
                             return (
                                 <TableRow key={row.id} className = {i % 2 === 0 ? 'even' : 'odd'} >
                                     <TableCell className='mat-cell-left'>
-                                        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.ROLE_ADMIN as string) ? 
+                                        {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.REACT_APP_ROLE_ADMIN as string) ? 
                                             <Link to = {"/contactedit/" + row.id} className="hyperlink">
                                                 {row.lastName}
                                             </Link>
@@ -214,7 +214,7 @@ const ContactList = () => {
                                             Download
                                         </Button>
                                     </TableCell>
-                                    {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.ROLE_ADMIN as string) &&
+                                    {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.REACT_APP_ROLE_ADMIN as string) &&
                                         <TableCell className='mat-cell-left'>
                                             <Button variant = "secondary" type = "button" onClick={() => onDelete(row)}>
                                                 X

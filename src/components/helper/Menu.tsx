@@ -32,6 +32,7 @@ const Menu = (props: MenuProps) => {
                         Search
                     </NavDropdown.Item>
                 </NavDropdown>
+                {userAccountContext?.userAccount?.roleId && userAccountContext?.userAccount?.roleId === parseInt(process.env.REACT_APP_ROLE_ADMIN as string) &&
                 <NavDropdown title = "Users" id = "nav-dropdown" className = 'nav-dropdown' onSelect = {handleMenuSelect}>
                     <NavDropdown.Item eventKey={"/userlist"}>
                         Users
@@ -40,6 +41,7 @@ const Menu = (props: MenuProps) => {
                         Search
                     </NavDropdown.Item>
                 </NavDropdown>
+                }
                 <Nav.Link onClick={() => handleMenuSelect("/aboutpage")}>
                     <div className='menu-link'>
                         About
